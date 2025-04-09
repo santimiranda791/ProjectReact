@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Containertask } from '../Containertask/Containertask';
 import { ListTask } from '../ListTask/ListTask';  
 import { FilterTask } from '../FilterTask/FilterTask';
+import { context } from '../../Context/Context';
 
 export const Task = () => {
-  const [tasks, setTasks] = useState([]); 
-
-  const addTask = (newTask) => {
-    setTasks([...tasks, { ...newTask, completed: false }]); 
-  };
+  const { filteredTasks, setTasks } = useContext(context);
 
   const deleteTask = (indexToDelete) => {
-    setTasks(tasks.filter((_, index) => index !== indexToDelete)); 
+    setTasks(prevTasks => prevTasks.filter((_, index) => index !== indexToDelete)); 
   };
 
   const toggleTaskCompletion = (indexToToggle) => {
-    setTasks(
-      tasks.map((task, index) =>
+    setTasks(prevTasks =>
+      prevTasks.map((task, index) =>
         index === indexToToggle ? { ...task, completed: !task.completed } : task
       )
     );
@@ -25,9 +22,9 @@ export const Task = () => {
   return (
     <div className='containerTask'>
       <h1>To-Do List</h1>
-      <Containertask addTask={addTask} />
+      <Containertask />
       <FilterTask />
-      <ListTask tasks={tasks} deleteTask={deleteTask} toggleTaskCompletion={toggleTaskCompletion} /> 
+      <ListTask tasks={filteredTasks} deleteTask={deleteTask} toggleTaskCompletion={toggleTaskCompletion} /> 
     </div>
   );
 };

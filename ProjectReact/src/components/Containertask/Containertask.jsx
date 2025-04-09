@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
 import { context } from '../../Context/Context';
 
-export const Containertask = ({ addTask }) => {
-  const { title, setTitle, description, setDescription } = useContext(context);
+export const Containertask = () => {
+  const { tasks, setTasks, title, setTitle, description, setDescription } = useContext(context);
 
   const handleAddTask = (e) => {
     e.preventDefault();
     if (title && description) {
-      const newTask = { title, description };
-      addTask(newTask);
+      const newTask = { 
+        id: Date.now(), 
+        title, 
+        description, 
+        completed: false 
+      };
+      setTasks([...tasks, newTask]);
       setTitle('');
       setDescription('');
     } else {

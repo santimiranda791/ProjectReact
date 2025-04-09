@@ -146,3 +146,13 @@
   text-decoration: line-through;
   color: #888;
 }
+
+.filterTask button.active {
+  background-color: #007bff; 
+  color: white; 
+  border: 1px solid #0056b3; 
+}
+
+.filterTask button.active:hover {
+  background-color: #0056b3; 
+}
